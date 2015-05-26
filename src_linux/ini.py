@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+
 import requests
 import os
 from bs4 import BeautifulSoup
@@ -7,27 +9,6 @@ import shutil
 CF = raw_input()
 
 url = "http://codeforces.com/contest/"+CF+"/problems"
-
-lag=0
-try:
-    data = requests.get(url)
-    flag = 1
-except Exception, e:
-    print "Direct Connection Failed, trying Proxy"
-    fo = open("proxy.txt", "r+")
-    http_proxy = fo.read(100)
-    fo.close()
-
-    proxyDict = { 
-                   "http"  : "http://"+http_proxy
-                }
-
-    data = requests.get(url, proxies=proxyDict)
-    flag=1
-
-if flag==0:
-    print "Error in Connection to Internet"
-
 data = requests.get(url)
 
 soup = BeautifulSoup(data.text)
@@ -41,10 +22,25 @@ for x in soup.findAll('li', 'current'):
 if present == 0:
     exit()
 
-        
+'''
+for div in soup.findAll('div', 'problemindexholder'):
+    count = 0
+    for item in div.findAll('div'):
+        count+=1
+        if count == 13:
+            print "\n\n\nPROBLEM STATEMENT : "
+            print item.text
+        if count == 14:
+            print "\n\n\nINPUT : "
+            print item.text
+        if count == 16:
+            print "\n\n\nOUTPUT : "
+            print item.text
+'''
+
 counter = 0
 for div in soup.findAll('div', 'problemindexholder'):
-    
+
     if (os.path.exists(CF+"/"+chr(ord('A')+counter))):
         print "Folder Exists"
     else:
@@ -54,8 +50,8 @@ for div in soup.findAll('div', 'problemindexholder'):
     shutil.copyfile("zy.sh",CF+"/"+chr(ord('A')+counter)+"/zy.sh")
     shutil.copyfile("zx.sh",CF+"/"+chr(ord('A')+counter)+"/zx.sh")
     shutil.copyfile("temp.txt",CF+"/"+chr(ord('A')+counter)+"/round.txt")
-    shutil.copyfile("template.cpp", CF+"/"+chr(ord('A')+counter)+"/aprog.cpp" )
-    
+    shutil.copyfile("template.cpp", CF+"/"+chr(ord('A')+counter)+"/prog.cpp" )
+
     detach_dir = CF+"/"+chr(ord('A')+counter)+"/"
     att_path = os.path.join(detach_dir, chr(ord('A')+counter)+".cpp")
     counter+=1

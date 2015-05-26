@@ -1,12 +1,11 @@
 {
-    //"cmd": ["g++", "-Wall", "${file_name}","-o", "${file_base_name}.exe"], 
-
+  
     "cmd": ["g++ '${file}' -o '${file_path}/${file_base_name}'"],
 
     "selector": "source.c++",
     "shell": true,
-    
-    "variants": 
+
+    "variants":
     		[
                 {
                     "cmd": [ "sh ${packages}/User/CF/dist/ini.sh" ],
@@ -14,7 +13,7 @@
                     "name": "parse_test_cases",
                     "working_dir" : "$file_path"
                 },
-                {   
+                {
                     "cmd": [ "'${file_path}'/zz.sh '${file_base_name}'" ],
                     "shell": true,
                     "name": "Run",

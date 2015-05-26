@@ -1,8 +1,7 @@
-#!/bin/zsh
-
 echo -n "Enter the round number : "
 read round
-./ini.py < $round
+echo $round > temp.txt
+./ini < temp.txt
 if [ ! -d "$round" ]; then
   exit
 fi
